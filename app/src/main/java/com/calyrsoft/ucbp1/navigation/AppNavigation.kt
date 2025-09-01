@@ -15,7 +15,7 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Login.route // 👈 Ahora inicia en Login
+        startDestination = Screen.Login.route // 👈 Login primero
     ) {
         composable(Screen.Login.route) {
             LoginScreen(navController = navController)
@@ -24,10 +24,11 @@ fun AppNavigation() {
             GithubScreen(modifier = Modifier)
         }
         composable(Screen.Home.route) {
-
+            // TODO: implementar Home
         }
         composable(Screen.Profile.route) {
-
+            // TODO: implementar Profile
         }
     }
+
 }

@@ -1,16 +1,17 @@
 package com.calyrsoft.ucbp1.features.login.presentation
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.calyrsoft.ucbp1.navigation.Screen
 import org.koin.androidx.compose.koinViewModel
+import com.calyrsoft.ucbp1.navigation.Screen
 
 @Composable
 fun LoginScreen(
@@ -19,57 +20,40 @@ fun LoginScreen(
 ) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-
     val state by vm.state.collectAsState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Text(text = "Login", style = MaterialTheme.typography.headlineMedium)
-
+    Column(modifier = Modifier.padding(16.dp)) {
         OutlinedTextField(
             value = username,
             onValueChange = { username = it },
             label = { Text("Usuario") },
-            modifier = Modifier.padding(top = 16.dp)
+            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
         )
 
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
             label = { Text("Contraseña") },
-            visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.padding(top = 16.dp)
+            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
         )
 
         Button(
-            onClick = {
-                vm.login(username, password)
-            },
-            modifier = Modifier.padding(top = 24.dp)
+            onClick = { vm.login(username, password) },
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Iniciar sesión")
+            Text("Iniciar Sesión")
         }
 
-        when(state) {
-            is LoginViewModel.LoginState.Error -> {
-                Text(
-                    text = (state as LoginViewModel.LoginState.Error).message,
-                    color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.padding(top = 12.dp)
-                )
+        when (val st = state) {
+            is LoginViewModel.LoginStateUI.Init -> Text("Ingrese sus credenciales")
+            is LoginViewModel.LoginStateUI.Loading -> Text("Cargando...")
+            is LoginViewModel.LoginStateUI.Error -> Text("Error: ${st.message}")
+            is LoginViewModel.LoginStateUI.Success -> {
+                Text("Bienvenido ${st.user.displayName}")
+                // Navegar a Github después del login exitoso
+                navController.navigate(Screen.Github.route)
             }
-            is LoginViewModel.LoginState.Success -> {
-                LaunchedEffect(Unit) {
-                    navController.navigate(Screen.Github.route) {
-                        popUpTo(Screen.Login.route) { inclusive = true }
-                    }
-                    vm.resetState() // Reinicia estado si se vuelve a la pantalla
-                }
-            }
-            else -> {}
         }
     }
 }
+
