@@ -51,7 +51,7 @@ fun LoginScreen(
             is LoginViewModel.LoginStateUI.Success -> {
                 Text("Bienvenido ${st.user.displayName}")
                 // Navegar a Github después del login exitoso
-                navController.navigate(Screen.Github.route)
+                navController.navigate(Screen.Dollar.route)
             }
         }
     }

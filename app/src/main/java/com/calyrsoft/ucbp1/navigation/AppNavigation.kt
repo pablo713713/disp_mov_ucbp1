@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.calyrsoft.ucbp1.features.dollar.presentation.DollarScreen
 import com.calyrsoft.ucbp1.features.github.presentation.GithubScreen
 import com.calyrsoft.ucbp1.features.login.presentation.LoginScreen
 
@@ -22,6 +23,10 @@ fun AppNavigation() {
         }
         composable(Screen.Github.route) {
             GithubScreen(modifier = Modifier)
+        }
+        composable( Screen.Dollar.route)
+        {
+            DollarScreen(modifier = Modifier)
         }
         composable(Screen.Home.route) {
             // TODO: implementar Home
