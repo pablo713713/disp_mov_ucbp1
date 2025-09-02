@@ -12,7 +12,7 @@ class DollarQuote: IDollarQuote{
 
         return Result.success(
             UserQuote(
-                "calyr",
+                "dollar",
                 "https://avatars.githubusercontent.com/u/874321?v=4"
             )
         )

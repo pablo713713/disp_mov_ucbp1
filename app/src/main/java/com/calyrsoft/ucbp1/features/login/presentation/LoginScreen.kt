@@ -50,9 +50,13 @@ fun LoginScreen(
             is LoginViewModel.LoginStateUI.Error -> Text("Error: ${st.message}")
             is LoginViewModel.LoginStateUI.Success -> {
                 Text("Bienvenido ${st.user.displayName}")
-                // Navegar a Github después del login exitoso
-                navController.navigate(Screen.Dollar.route)
+                LaunchedEffect(Unit) {
+                    navController.navigate(Screen.Github.route) {
+                        popUpTo(Screen.Login.route) { inclusive = true } // Borra la pantalla de login del stack
+                    }
+                }
             }
+
         }
     }
 }

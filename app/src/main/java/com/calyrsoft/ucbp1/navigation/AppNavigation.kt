@@ -22,11 +22,10 @@ fun AppNavigation() {
             LoginScreen(navController = navController)
         }
         composable(Screen.Github.route) {
-            GithubScreen(modifier = Modifier)
+            GithubScreen(navController = navController)
         }
-        composable( Screen.Dollar.route)
-        {
-            DollarScreen(modifier = Modifier)
+        composable(Screen.Dollar.route) {
+            DollarScreen(navController = navController)
         }
         composable(Screen.Home.route) {
             // TODO: implementar Home

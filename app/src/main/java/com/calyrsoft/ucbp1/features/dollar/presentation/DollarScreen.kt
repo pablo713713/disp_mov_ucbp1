@@ -3,6 +3,7 @@ package com.calyrsoft.ucbp1.features.dollar.presentation
 import com.calyrsoft.ucbp1.features.dollar.presentation.DollarViewModel
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -15,12 +16,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil3.compose.AsyncImage
+import com.calyrsoft.ucbp1.features.github.presentation.GithubViewModel
+import com.calyrsoft.ucbp1.navigation.Screen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun DollarScreen( modifier: Modifier,
-                  vm : DollarViewModel = koinViewModel()
+fun DollarScreen(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    vm: DollarViewModel = koinViewModel()
 ) {
 
     var nickname by remember { mutableStateOf("") }
@@ -38,7 +44,13 @@ fun DollarScreen( modifier: Modifier,
         OutlinedButton( onClick = {
             vm.fetchAlias(nickname)
         }) {
-            Text("")
+            Text("Buscar")
+        }
+        Button(
+            onClick = { navController.navigate(Screen.Github.route) },
+            modifier = Modifier
+        ) {
+            Text("Ir a Github")
         }
         when( val st = state) {
             is DollarViewModel.DollarStateUI.Error -> {
